@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,13 +77,21 @@ public class ListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //Get the ListViewModel instance
         mListViewModel = ViewModelProviders.of(this).get(ListViewModel.class);
+        //Set the Layout Manager for RecyclerView
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        //Add Item Decoration to RecyclerView Items
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        //Set RecyclerView Adapter
+        mRecyclerView.setAdapter(new RepoListAdapter(mListViewModel, this));
         //Register the data observers on ListViewModel
         observeListViewModel();
     }
 
     private void observeListViewModel() {
+        //Register for loading Repositories
         mListViewModel.getRepos().observe(this, repos -> {
             if (repos != null) {
+                //When Repositories are available, show the RecyclerView
                 mRecyclerView.setVisibility(View.VISIBLE);
             }
         });
