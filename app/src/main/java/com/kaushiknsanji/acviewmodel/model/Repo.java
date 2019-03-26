@@ -5,50 +5,50 @@ import com.squareup.moshi.Json;
 
 public class Repo {
 
-    private final long mId;
+    private final long id;
 
-    private final String mName;
+    private final String name;
 
-    private final String mDescription;
+    private final String description;
 
-    private final User mOwner;
+    private final User owner;
 
     @Json(name = "stargazers_count")
-    private final long mStars;
+    private final long stars;
 
     @Json(name = "forks_count")
-    private final long mForks;
+    private final long forks;
 
     public Repo(long id, String name, String description, User owner, long stars, long forks) {
-        mId = id;
-        mName = name;
-        mDescription = description;
-        mOwner = owner;
-        mStars = stars;
-        mForks = forks;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.owner = owner;
+        this.stars = stars;
+        this.forks = forks;
     }
 
     public long getId() {
-        return mId;
+        return id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public User getOwner() {
-        return mOwner;
+        return owner;
     }
 
     public long getStars() {
-        return mStars;
+        return stars;
     }
 
     public long getForks() {
-        return mForks;
+        return forks;
     }
 }

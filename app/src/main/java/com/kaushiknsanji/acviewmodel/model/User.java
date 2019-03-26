@@ -3,13 +3,13 @@ package com.kaushiknsanji.acviewmodel.model;
 
 public class User {
 
-    private final String mLoginId;
+    private final String id;
 
     public User(String loginId) {
-        mLoginId = loginId;
+        id = loginId;
     }
 
     public String getLoginId() {
-        return mLoginId;
+        return id;
     }
 }
