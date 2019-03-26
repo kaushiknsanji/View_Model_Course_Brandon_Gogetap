@@ -1,5 +1,6 @@
 package com.kaushiknsanji.acviewmodel.home;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,8 @@ public class ListFragment extends Fragment {
 
     private Unbinder mUnbinder;
 
+    private ListViewModel mListViewModel;
+
     /**
      * Called to have the fragment instantiate its user interface view.
      * This is optional, and non-graphical fragments can return null (which
@@ -56,6 +59,60 @@ public class ListFragment extends Fragment {
         mUnbinder = ButterKnife.bind(this, rootView);
 
         return rootView;
+    }
+
+    /**
+     * Called immediately after {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}
+     * has returned, but before any saved state has been restored in to the view.
+     * This gives subclasses a chance to initialize themselves once
+     * they know their view hierarchy has been completely created.  The fragment's
+     * view hierarchy is not however attached to its parent at this point.
+     *
+     * @param view               The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Get the ListViewModel instance
+        mListViewModel = ViewModelProviders.of(this).get(ListViewModel.class);
+        //Register the data observers on ListViewModel
+        observeListViewModel();
+    }
+
+    private void observeListViewModel() {
+        mListViewModel.getRepos().observe(this, repos -> {
+            if (repos != null) {
+                mRecyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //Register for loading error status
+        mListViewModel.getRepoLoadError().observe(this, isError -> {
+            //noinspection ConstantConditions
+            if (isError) {
+                //On Error, show the Error TextView with an Error message
+                mTextViewError.setVisibility(View.VISIBLE);
+                mTextViewError.setText(R.string.api_error_repos);
+                //Hide the RecyclerView
+                mRecyclerView.setVisibility(View.GONE);
+            } else {
+                //On NO Error, hide the Error TextView and clear the Error message previously set
+                mTextViewError.setVisibility(View.GONE);
+                mTextViewError.setText(null);
+            }
+        });
+
+        //Register for loading status
+        mListViewModel.getLoading().observe(this, isLoading -> {
+            //Show the Progress when loading
+            //noinspection ConstantConditions
+            mProgressBarLoadingView.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            if (isLoading) {
+                //When loading, hide the Error TextView and the RecyclerView
+                mTextViewError.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
+            }
+        });
     }
 
     /**
