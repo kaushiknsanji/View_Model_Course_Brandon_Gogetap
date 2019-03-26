@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 
 public interface RepoService {
 
-    @GET("org/Google/repos")
+    @GET("orgs/Google/repos")
     Call<List<Repo>> getRepositories();
 
 }
