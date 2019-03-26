@@ -43,7 +43,7 @@ public class ListViewModel extends ViewModel {
      *
      * @return LiveData of the List of Repositories loaded
      */
-    public LiveData<List<Repo>> getRepos() {
+    LiveData<List<Repo>> getRepos() {
         return mLiveRepos;
     }
 
@@ -53,7 +53,7 @@ public class ListViewModel extends ViewModel {
      * @return LiveData of Boolean representing the status of error encountered while
      * loading the Repositories
      */
-    public LiveData<Boolean> getRepoLoadError() {
+    LiveData<Boolean> getRepoLoadError() {
         return mLiveRepoLoadError;
     }
 
@@ -62,7 +62,7 @@ public class ListViewModel extends ViewModel {
      *
      * @return LiveData of Boolean representing the status of loading the Repositories
      */
-    public LiveData<Boolean> getLoading() {
+    LiveData<Boolean> getLoading() {
         return mLiveLoading;
     }
 
@@ -97,7 +97,7 @@ public class ListViewModel extends ViewModel {
                     //When the response is not successful
 
                     //Log an error message
-                    Log.e(LOG_TAG, "onResponse: Failed with code: " + response.code());
+                    Log.e(LOG_TAG, "onResponse: Failed with code: " + response.code() + "\n" + response.toString());
                     //Set the error status to True
                     mLiveRepoLoadError.setValue(true);
                 }
