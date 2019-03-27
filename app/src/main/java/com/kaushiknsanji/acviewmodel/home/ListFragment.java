@@ -15,13 +15,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaushiknsanji.acviewmodel.R;
+import com.kaushiknsanji.acviewmodel.details.DetailsFragment;
+import com.kaushiknsanji.acviewmodel.model.Repo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements RepoSelectedListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -82,7 +84,7 @@ public class ListFragment extends Fragment {
         //Add Item Decoration to RecyclerView Items
         mRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         //Set RecyclerView Adapter
-        mRecyclerView.setAdapter(new RepoListAdapter(mListViewModel, this));
+        mRecyclerView.setAdapter(new RepoListAdapter(mListViewModel, this, this));
         //Register the data observers on ListViewModel
         observeListViewModel();
     }
@@ -144,4 +146,23 @@ public class ListFragment extends Fragment {
         }
     }
 
+    /**
+     * Callback Method of {@link RepoSelectedListener} invoked when
+     * the user clicks on a Repo item in the list of Repositories shown.
+     *
+     * @param repo The {@link Repo} data of the item clicked
+     */
+    @Override
+    public void onRepoSelected(Repo repo) {
+        //Get the SelectedRepoViewModel Instance
+        SelectedRepoViewModel selectedRepoViewModel = ViewModelProviders.of(requireActivity()).get(SelectedRepoViewModel.class);
+        //Set the selected Repo on the ViewModel
+        selectedRepoViewModel.setSelectedRepo(repo);
+        //Show the DetailsFragment
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.screen_container, new DetailsFragment())
+                .addToBackStack(null)
+                .commit();
+    }
 }

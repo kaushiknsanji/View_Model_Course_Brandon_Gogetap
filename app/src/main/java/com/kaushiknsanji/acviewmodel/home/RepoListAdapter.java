@@ -23,14 +23,17 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
     //Data of the Adapter which is a list of Repositories
     private final List<Repo> mRepoList = new ArrayList<>();
 
+    //Listener instance that receives callback events on user actions
+    private final RepoSelectedListener mRepoSelectedListener;
+
     /**
      * Constructor of {@link RepoListAdapter}
-     *
-     * @param viewModel      Instance of {@link ListViewModel}
+     *  @param viewModel      Instance of {@link ListViewModel}
      * @param lifecycleOwner Instance of {@link LifecycleOwner} that needs to receive the events
      *                       published by the {@link ListViewModel}
+     * @param repoSelectedListener Instance of {@link RepoSelectedListener} to receive callback events on user actions
      */
-    RepoListAdapter(ListViewModel viewModel, LifecycleOwner lifecycleOwner) {
+    RepoListAdapter(ListViewModel viewModel, LifecycleOwner lifecycleOwner, RepoSelectedListener repoSelectedListener) {
         //Register for loading Repositories
         viewModel.getRepos().observe(lifecycleOwner, repos -> {
             //Clear data initially
@@ -42,6 +45,8 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
                 notifyDataSetChanged(); //TODO: Use DiffUtil with AutoValue models later
             }
         });
+
+        mRepoSelectedListener = repoSelectedListener;
 
         //All Items have stable Ids
         setHasStableIds(true);
@@ -143,6 +148,9 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
         @BindView(R.id.tv_forks)
         TextView mTextViewForks;
 
+        //Reference to the data at the item position received during bind
+        private Repo mItemRepo;
+
         /**
          * Constructor of {@link ViewHolder}
          *
@@ -151,6 +159,12 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            //Register click listener on the Item View
+            itemView.setOnClickListener(view -> {
+                if (mItemRepo != null) {
+                    mRepoSelectedListener.onRepoSelected(mItemRepo);
+                }
+            });
         }
 
         /**
@@ -159,6 +173,9 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
          * @param repo The {@link Repo} data at the Item position
          */
         void bind(Repo repo) {
+            //Store a reference to the data at the position
+            mItemRepo = repo;
+            //Bind the views to the data at the position
             mTextViewRepoName.setText(repo.getName());
             mTextViewRepoDescription.setText(repo.getDescription());
             mTextViewStars.setText(String.valueOf(repo.getStars()));
