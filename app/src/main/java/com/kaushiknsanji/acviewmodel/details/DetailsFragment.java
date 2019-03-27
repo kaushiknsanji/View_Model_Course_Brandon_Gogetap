@@ -1,5 +1,6 @@
 package com.kaushiknsanji.acviewmodel.details;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kaushiknsanji.acviewmodel.R;
+import com.kaushiknsanji.acviewmodel.home.SelectedRepoViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +76,18 @@ public class DetailsFragment extends Fragment {
     }
 
     private void displayRepo() {
+        //Get the SelectedRepoViewModel Instance
+        SelectedRepoViewModel selectedRepoViewModel = ViewModelProviders.of(requireActivity()).get(SelectedRepoViewModel.class);
+        //Register for loading Selected Repo
+        selectedRepoViewModel.getLiveSelectedRepo().observe(this, repo -> {
+            if (repo != null) {
+                //Bind the Selected Repo data to the views when available
+                mTextViewRepoName.setText(repo.getName());
+                mTextViewRepoDescription.setText(repo.getDescription());
+                mTextViewStars.setText(String.valueOf(repo.getStars()));
+                mTextViewForks.setText(String.valueOf(repo.getForks()));
+            }
+        });
 
     }
 
