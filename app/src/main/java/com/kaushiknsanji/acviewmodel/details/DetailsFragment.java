@@ -34,6 +34,8 @@ public class DetailsFragment extends Fragment {
 
     private Unbinder mUnbinder;
 
+    private SelectedRepoViewModel mSelectedRepoViewModel;
+
     /**
      * Called to have the fragment instantiate its user interface view.
      * This is optional, and non-graphical fragments can return null (which
@@ -72,14 +74,47 @@ public class DetailsFragment extends Fragment {
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Get the SelectedRepoViewModel Instance
+        mSelectedRepoViewModel = ViewModelProviders.of(requireActivity()).get(SelectedRepoViewModel.class);
+        //Restore the SelectedRepoViewModel state from the Bundle
+        mSelectedRepoViewModel.restoreFromBundle(savedInstanceState);
+        //Display the Selected Repo details
         displayRepo();
     }
 
+    /**
+     * Called to ask the fragment to save its current dynamic state, so it
+     * can later be reconstructed in a new instance of its process is
+     * restarted.  If a new instance of the fragment later needs to be
+     * created, the data you place in the Bundle here will be available
+     * in the Bundle given to {@link #onCreate(Bundle)},
+     * {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}, and
+     * {@link #onActivityCreated(Bundle)}.
+     * <p>
+     * <p>This corresponds to {@link android.support.v4.app.FragmentActivity#onSaveInstanceState(Bundle)
+     * Activity.onSaveInstanceState(Bundle)} and most of the discussion there
+     * applies here as well.  Note however: <em>this method may be called
+     * at any time before {@link #onDestroy()}</em>.  There are many situations
+     * where a fragment may be mostly torn down (such as when placed on the
+     * back stack with no UI showing), but its state will not be saved until
+     * its owning activity actually needs to save its state.
+     *
+     * @param outState Bundle in which to place your saved state.
+     */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Save the SelectedRepoViewModel state to Bundle
+        mSelectedRepoViewModel.saveToBundle(outState);
+    }
+
+    /**
+     * Method that binds the Selected {@link com.kaushiknsanji.acviewmodel.model.Repo} data
+     * to the Views
+     */
     private void displayRepo() {
-        //Get the SelectedRepoViewModel Instance
-        SelectedRepoViewModel selectedRepoViewModel = ViewModelProviders.of(requireActivity()).get(SelectedRepoViewModel.class);
         //Register for loading Selected Repo
-        selectedRepoViewModel.getLiveSelectedRepo().observe(this, repo -> {
+        mSelectedRepoViewModel.getLiveSelectedRepo().observe(this, repo -> {
             if (repo != null) {
                 //Bind the Selected Repo data to the views when available
                 mTextViewRepoName.setText(repo.getName());
@@ -88,7 +123,6 @@ public class DetailsFragment extends Fragment {
                 mTextViewForks.setText(String.valueOf(repo.getForks()));
             }
         });
-
     }
 
     /**
