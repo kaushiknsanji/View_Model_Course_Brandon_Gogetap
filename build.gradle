@@ -43,6 +43,9 @@ ext {
     //Moshi dependencies
     moshiVersion = '1.5.0'
 
+    //Dagger dependencies
+    daggerVersion = '2.21'
+
     //Test dependencies
     jUnitVersion = '4.12'
     testRunnerVersion = '1.0.2'

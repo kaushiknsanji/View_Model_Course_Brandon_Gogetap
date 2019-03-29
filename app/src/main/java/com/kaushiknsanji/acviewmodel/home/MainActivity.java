@@ -1,11 +1,11 @@
 package com.kaushiknsanji.acviewmodel.home;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.kaushiknsanji.acviewmodel.R;
+import com.kaushiknsanji.acviewmodel.base.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -47,6 +47,10 @@ dependencies {
     //Moshi dependencies
     implementation "com.squareup.moshi:moshi:$rootProject.ext.moshiVersion"
 
+    //Dagger dependencies
+    implementation "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+
     //Test dependencies
     testImplementation "junit:junit:$rootProject.ext.jUnitVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.ext.testRunnerVersion"

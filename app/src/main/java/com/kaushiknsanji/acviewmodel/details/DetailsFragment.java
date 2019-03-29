@@ -4,13 +4,13 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kaushiknsanji.acviewmodel.R;
+import com.kaushiknsanji.acviewmodel.base.BaseFragment;
 import com.kaushiknsanji.acviewmodel.home.SelectedRepoViewModel;
 
 import butterknife.BindView;
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends BaseFragment {
 
     @BindView(R.id.tv_repo_name)
     TextView mTextViewRepoName;

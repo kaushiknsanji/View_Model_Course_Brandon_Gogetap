@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaushiknsanji.acviewmodel.R;
+import com.kaushiknsanji.acviewmodel.base.BaseFragment;
 import com.kaushiknsanji.acviewmodel.details.DetailsFragment;
 import com.kaushiknsanji.acviewmodel.model.Repo;
 
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class ListFragment extends Fragment implements RepoSelectedListener {
+public class ListFragment extends BaseFragment implements RepoSelectedListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
