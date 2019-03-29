@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.kaushiknsanji.acviewmodel.model.Repo;
-import com.kaushiknsanji.acviewmodel.networking.RepoApi;
+import com.kaushiknsanji.acviewmodel.networking.RepoService;
 
 import javax.inject.Inject;
 
@@ -27,14 +27,21 @@ public class SelectedRepoViewModel extends ViewModel {
     //To expose the Selected Repo data
     private final MutableLiveData<Repo> mLiveSelectedRepo = new MutableLiveData<>();
 
+    //Instance of Retrofit Service for GitHub API Calls
+    private final RepoService mRepoService;
+
     //Reference to the request for the details of the Repo
     private Call<Repo> mRepoDetailsCall;
 
     /**
      * Constructor of {@link SelectedRepoViewModel}
+     *
+     * @param repoService Dagger provided instance of {@link RepoService}
      */
     @Inject
-    SelectedRepoViewModel() {
+    SelectedRepoViewModel(RepoService repoService) {
+        //Save the Retrofit Service
+        mRepoService = repoService;
     }
 
     /**
@@ -97,7 +104,7 @@ public class SelectedRepoViewModel extends ViewModel {
      */
     private void loadRepo(String[] repoDetailsArray) {
         //Make a request to get the Repo details
-        mRepoDetailsCall = RepoApi.getInstance().getRepo(repoDetailsArray[0], repoDetailsArray[1]);
+        mRepoDetailsCall = mRepoService.getRepo(repoDetailsArray[0], repoDetailsArray[1]);
         //Enqueue the above request
         mRepoDetailsCall.enqueue(new Callback<Repo>() {
             /**

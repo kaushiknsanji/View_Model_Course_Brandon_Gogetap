@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.kaushiknsanji.acviewmodel.model.Repo;
-import com.kaushiknsanji.acviewmodel.networking.RepoApi;
+import com.kaushiknsanji.acviewmodel.networking.RepoService;
 
 import java.util.List;
 
@@ -29,14 +29,20 @@ public class ListViewModel extends ViewModel {
     private final MutableLiveData<Boolean> mLiveRepoLoadError = new MutableLiveData<>();
     //To expose the loading status of Repos data
     private final MutableLiveData<Boolean> mLiveLoading = new MutableLiveData<>();
+    //Instance of Retrofit Service for GitHub API Calls
+    private final RepoService mRepoService;
     //Reference to the request for the list of Repositories
     private Call<List<Repo>> mRepoCall;
 
     /**
      * Constructor of the {@link ListViewModel}
+     *
+     * @param repoService Dagger provided instance of {@link RepoService}
      */
     @Inject
-    ListViewModel() {
+    ListViewModel(RepoService repoService) {
+        //Save the Retrofit Service
+        mRepoService = repoService;
         //Load the list of Repositories
         fetchRepos();
     }
@@ -77,7 +83,7 @@ public class ListViewModel extends ViewModel {
         mLiveLoading.setValue(true);
 
         //Make a request to get the list of Repositories
-        mRepoCall = RepoApi.getInstance().getRepositories();
+        mRepoCall = mRepoService.getRepositories();
         //Enqueue the above request
         mRepoCall.enqueue(new Callback<List<Repo>>() {
             /**

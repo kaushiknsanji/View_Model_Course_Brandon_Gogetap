@@ -1,6 +1,7 @@
 package com.kaushiknsanji.acviewmodel.home;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,9 @@ import com.kaushiknsanji.acviewmodel.R;
 import com.kaushiknsanji.acviewmodel.base.BaseFragment;
 import com.kaushiknsanji.acviewmodel.details.DetailsFragment;
 import com.kaushiknsanji.acviewmodel.model.Repo;
+import com.kaushiknsanji.acviewmodel.viewmodel.ViewModelFactory;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +28,9 @@ import butterknife.Unbinder;
 
 
 public class ListFragment extends BaseFragment implements RepoSelectedListener {
+
+    @Inject
+    ViewModelFactory mViewModelFactory;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -37,6 +44,17 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
     private Unbinder mUnbinder;
 
     private ListViewModel mListViewModel;
+
+    /**
+     * Called when a fragment is first attached to its context.
+     * {@link #onCreate(Bundle)} will be called after this.
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //Inject the ListFragment's dependencies
+        getApplicationComponent().inject(this);
+    }
 
     /**
      * Called to have the fragment instantiate its user interface view.
@@ -78,7 +96,7 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //Get the ListViewModel instance
-        mListViewModel = ViewModelProviders.of(this).get(ListViewModel.class);
+        mListViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListViewModel.class);
         //Set the Layout Manager for RecyclerView
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         //Add Item Decoration to RecyclerView Items
@@ -155,7 +173,7 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
     @Override
     public void onRepoSelected(Repo repo) {
         //Get the SelectedRepoViewModel Instance
-        SelectedRepoViewModel selectedRepoViewModel = ViewModelProviders.of(requireActivity()).get(SelectedRepoViewModel.class);
+        SelectedRepoViewModel selectedRepoViewModel = ViewModelProviders.of(requireActivity(), mViewModelFactory).get(SelectedRepoViewModel.class);
         //Set the selected Repo on the ViewModel
         selectedRepoViewModel.setSelectedRepo(repo);
         //Show the DetailsFragment

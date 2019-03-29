@@ -1,6 +1,7 @@
 package com.kaushiknsanji.acviewmodel.details;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 import com.kaushiknsanji.acviewmodel.R;
 import com.kaushiknsanji.acviewmodel.base.BaseFragment;
 import com.kaushiknsanji.acviewmodel.home.SelectedRepoViewModel;
+import com.kaushiknsanji.acviewmodel.viewmodel.ViewModelFactory;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +23,9 @@ import butterknife.Unbinder;
 
 
 public class DetailsFragment extends BaseFragment {
+
+    @Inject
+    ViewModelFactory mViewModelFactory;
 
     @BindView(R.id.tv_repo_name)
     TextView mTextViewRepoName;
@@ -35,6 +42,17 @@ public class DetailsFragment extends BaseFragment {
     private Unbinder mUnbinder;
 
     private SelectedRepoViewModel mSelectedRepoViewModel;
+
+    /**
+     * Called when a fragment is first attached to its context.
+     * {@link #onCreate(Bundle)} will be called after this.
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //Inject the DetailsFragment's dependencies
+        getApplicationComponent().inject(this);
+    }
 
     /**
      * Called to have the fragment instantiate its user interface view.
@@ -75,7 +93,7 @@ public class DetailsFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //Get the SelectedRepoViewModel Instance
-        mSelectedRepoViewModel = ViewModelProviders.of(requireActivity()).get(SelectedRepoViewModel.class);
+        mSelectedRepoViewModel = ViewModelProviders.of(requireActivity(), mViewModelFactory).get(SelectedRepoViewModel.class);
         //Restore the SelectedRepoViewModel state from the Bundle
         mSelectedRepoViewModel.restoreFromBundle(savedInstanceState);
         //Display the Selected Repo details
