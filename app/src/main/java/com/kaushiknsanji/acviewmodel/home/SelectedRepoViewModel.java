@@ -10,6 +10,8 @@ import android.util.Log;
 import com.kaushiknsanji.acviewmodel.model.Repo;
 import com.kaushiknsanji.acviewmodel.networking.RepoApi;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +29,13 @@ public class SelectedRepoViewModel extends ViewModel {
 
     //Reference to the request for the details of the Repo
     private Call<Repo> mRepoDetailsCall;
+
+    /**
+     * Constructor of {@link SelectedRepoViewModel}
+     */
+    @Inject
+    SelectedRepoViewModel() {
+    }
 
     /**
      * Method that emits a Live Selected {@link Repo} data
