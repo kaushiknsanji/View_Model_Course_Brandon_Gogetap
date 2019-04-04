@@ -18,6 +18,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * RecyclerView {@link android.support.v7.widget.RecyclerView.Adapter} for
+ * binding the {@link Repo} item data to the item views 'R.layout.item_repo_list'.
+ * <p>
+ * Used by the RecyclerView of the {@link ListFragment}.
+ * </p>
+ *
+ * @author Kaushik N Sanji
+ */
 public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHolder> {
 
     //Data of the Adapter which is a list of Repositories
@@ -46,6 +55,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
             }
         });
 
+        //Save the listener
         mRepoSelectedListener = repoSelectedListener;
 
         //All Items have stable Ids
@@ -136,15 +146,19 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
      * ViewHolder class for caching View components of the template item view 'R.layout.item_repo_list'
      */
     class ViewHolder extends RecyclerView.ViewHolder {
+        //TextView for displaying Repository Name
         @BindView(R.id.tv_repo_name)
         TextView mTextViewRepoName;
 
+        //TextView for displaying Repository description
         @BindView(R.id.tv_repo_description)
         TextView mTextViewRepoDescription;
 
+        //TextView for displaying the Number of Stars on the Repository
         @BindView(R.id.tv_stars)
         TextView mTextViewStars;
 
+        //TextView for displaying the Number of Forks on the Repository
         @BindView(R.id.tv_forks)
         TextView mTextViewForks;
 

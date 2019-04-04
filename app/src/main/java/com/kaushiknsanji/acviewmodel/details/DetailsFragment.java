@@ -21,26 +21,39 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
+/**
+ * {@link android.support.v4.app.Fragment} that inflates the layout 'R.layout.screen_details'
+ * to load and display the {@link com.kaushiknsanji.acviewmodel.model.Repo} details of the
+ * Repository selected by the User while in the {@link com.kaushiknsanji.acviewmodel.home.ListFragment}.
+ *
+ * @author Kaushik N Sanji
+ */
 public class DetailsFragment extends BaseFragment {
 
+    //Injected instance of the ViewModelFactory
     @Inject
     ViewModelFactory mViewModelFactory;
 
+    //TextView for displaying Repository Name
     @BindView(R.id.tv_repo_name)
     TextView mTextViewRepoName;
 
+    //TextView for displaying Repository description
     @BindView(R.id.tv_repo_description)
     TextView mTextViewRepoDescription;
 
+    //TextView for displaying the Number of Forks on the Repository
     @BindView(R.id.tv_forks)
     TextView mTextViewForks;
 
+    //TextView for displaying the Number of Stars on the Repository
     @BindView(R.id.tv_stars)
     TextView mTextViewStars;
 
+    //Butterknife's Unbinder instance
     private Unbinder mUnbinder;
 
+    //ViewModel for the Selected Repository
     private SelectedRepoViewModel mSelectedRepoViewModel;
 
     /**

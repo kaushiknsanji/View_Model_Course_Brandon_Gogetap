@@ -26,23 +26,34 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
+/**
+ * {@link android.support.v4.app.Fragment} that inflates the layout 'R.layout.screen_list' to load and display
+ * a list of GitHub Repositories. This is a container fragment of {@link MainActivity}.
+ *
+ * @author Kaushik N Sanji
+ */
 public class ListFragment extends BaseFragment implements RepoSelectedListener {
 
+    //Injected instance of the ViewModelFactory
     @Inject
     ViewModelFactory mViewModelFactory;
 
+    //RecyclerView to display the list of Repositories
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
+    //TextView to display the error
     @BindView(R.id.tv_error)
     TextView mTextViewError;
 
+    //ProgressBar to display the Progress circle
     @BindView(R.id.loading_view)
     ProgressBar mProgressBarLoadingView;
 
+    //Butterknife's Unbinder instance
     private Unbinder mUnbinder;
 
+    //ViewModel for the list of Repositories
     private ListViewModel mListViewModel;
 
     /**
@@ -79,7 +90,6 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.screen_list, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
-
         return rootView;
     }
 
@@ -107,6 +117,9 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
         observeListViewModel();
     }
 
+    /**
+     * Method that registers the data observers on ListViewModel
+     */
     private void observeListViewModel() {
         //Register for loading Repositories
         mListViewModel.getRepos().observe(this, repos -> {
@@ -176,11 +189,11 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
         SelectedRepoViewModel selectedRepoViewModel = ViewModelProviders.of(requireActivity(), mViewModelFactory).get(SelectedRepoViewModel.class);
         //Set the selected Repo on the ViewModel
         selectedRepoViewModel.setSelectedRepo(repo);
-        //Show the DetailsFragment
+        //Show the DetailsFragment, replacing the ListFragment at the container
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.screen_container, new DetailsFragment())
-                .addToBackStack(null)
+                .addToBackStack(null) //To enable back operation
                 .commit();
     }
 }

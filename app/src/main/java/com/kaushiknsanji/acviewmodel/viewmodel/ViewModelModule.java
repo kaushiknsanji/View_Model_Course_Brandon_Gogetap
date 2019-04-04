@@ -10,7 +10,9 @@ import dagger.Module;
 import dagger.multibindings.IntoMap;
 
 /**
- * Dagger Module for creating and exposing services related to ViewModels
+ * Dagger Module for creating and exposing services related to ViewModels.
+ *
+ * @author Kaushik N Sanji
  */
 @Module
 public abstract class ViewModelModule {

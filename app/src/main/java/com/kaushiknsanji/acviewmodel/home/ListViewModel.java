@@ -18,6 +18,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Custom {@link ViewModel} to fetch and provide a list of Repositories downloaded,
+ * to the {@link ListFragment} observers.
+ *
+ * @author Kaushik N Sanji
+ */
 public class ListViewModel extends ViewModel {
 
     //Constant used for logs

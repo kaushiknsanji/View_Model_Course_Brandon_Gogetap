@@ -16,6 +16,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Custom {@link ViewModel} that provides the Selected {@link Repo} details
+ * to the {@link com.kaushiknsanji.acviewmodel.details.DetailsFragment} observers.
+ * <p>
+ * It also reloads the Selected {@link Repo} details in save-restore flow
+ * by re-downloading the data using the Owner Name and Repository Name of
+ * the Selected {@link Repo}.
+ * </p>
+ *
+ * @author Kaushik N Sanji
+ */
 public class SelectedRepoViewModel extends ViewModel {
 
     //Constant used for logs

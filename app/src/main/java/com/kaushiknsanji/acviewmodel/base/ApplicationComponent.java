@@ -10,7 +10,9 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
- * Dagger Component for exposing services from the Module {@link NetworkModule}
+ * Dagger Component for exposing services from the Module {@link NetworkModule}.
+ *
+ * @author Kaushik N Sanji
  */
 @Singleton
 @Component(modules = {NetworkModule.class, ViewModelModule.class})

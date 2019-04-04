@@ -10,7 +10,9 @@ import java.lang.annotation.Target;
 import dagger.MapKey;
 
 /**
- * Annotation that identifies the Key for the Provider Map Entry
+ * Annotation that identifies the Key for the Provider Map Entry.
+ *
+ * @author Kaushik N Sanji
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

@@ -9,6 +9,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 /**
  * Dagger Module for creating and exposing Network related services, tied to the Application Lifecycle.
+ *
+ * @author Kaushik N Sanji
  */
 @Module
 public class NetworkModule {

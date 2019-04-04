@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 /**
  * An Abstract {@link AppCompatActivity} class which is the base class
- * for all the activities in this application
+ * for all the activities in this application.
+ *
+ * @author Kaushik N Sanji
  */
 public abstract class BaseActivity extends AppCompatActivity {
 

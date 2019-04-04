@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 /**
  * An Abstract {@link Fragment} class which is the base class
  * for all the Fragments in this application.
+ *
+ * @author Kaushik N Sanji
  */
 public abstract class BaseFragment extends Fragment {
 

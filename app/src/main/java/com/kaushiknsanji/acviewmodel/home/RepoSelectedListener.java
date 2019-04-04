@@ -5,6 +5,8 @@ import com.kaushiknsanji.acviewmodel.model.Repo;
 /**
  * Listener interface to be implemented by the {@link ListFragment}
  * to receive event callbacks for user actions on the list of Repositories shown.
+ *
+ * @author Kaushik N Sanji
  */
 public interface RepoSelectedListener {
 

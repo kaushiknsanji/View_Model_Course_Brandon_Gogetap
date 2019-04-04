@@ -3,7 +3,9 @@ package com.kaushiknsanji.acviewmodel.base;
 import android.app.Application;
 
 /**
- * {@link Application} class for exposing {@link ApplicationComponent}
+ * {@link Application} class for exposing {@link ApplicationComponent}.
+ *
+ * @author Kaushik N Sanji
  */
 public class MyApplication extends Application {
 

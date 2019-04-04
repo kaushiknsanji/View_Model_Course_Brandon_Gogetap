@@ -10,7 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 /**
- * Factory class for instantiating {@link ViewModel}s
+ * Factory class for instantiating {@link ViewModel}s.
+ *
+ * @author Kaushik N Sanji
  */
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
