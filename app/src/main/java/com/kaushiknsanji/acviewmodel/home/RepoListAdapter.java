@@ -3,6 +3,7 @@ package com.kaushiknsanji.acviewmodel.home;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,8 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
 
     /**
      * Constructor of {@link RepoListAdapter}
-     *  @param viewModel      Instance of {@link ListViewModel}
+     *
+     * @param viewModel      Instance of {@link ListViewModel}
      * @param lifecycleOwner Instance of {@link LifecycleOwner} that needs to receive the events
      *                       published by the {@link ListViewModel}
      * @param repoSelectedListener Instance of {@link RepoSelectedListener} to receive callback events on user actions
@@ -45,13 +47,25 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
     RepoListAdapter(ListViewModel viewModel, LifecycleOwner lifecycleOwner, RepoSelectedListener repoSelectedListener) {
         //Register for loading Repositories
         viewModel.getRepos().observe(lifecycleOwner, repos -> {
-            //Clear data initially
-            mRepoList.clear();
             if (repos != null) {
-                //Load new data when available
+                //When New data is available
+
+                //Compute the difference between the current and the new list of Repositories
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new RepoDiffCallback(mRepoList, repos));
+                //Notify the adapter about the changes required
+                diffResult.dispatchUpdatesTo(this);
+
+                //Clear the Adapter's data to load the new list of Repositories
+                mRepoList.clear();
                 mRepoList.addAll(repos);
+
+            } else {
+                //When NO data is available
+
+                //Clear the Adapter's data
+                mRepoList.clear();
                 //Trigger the data change event
-                notifyDataSetChanged(); //TODO: Use DiffUtil with AutoValue models later
+                notifyDataSetChanged();
             }
         });
 
