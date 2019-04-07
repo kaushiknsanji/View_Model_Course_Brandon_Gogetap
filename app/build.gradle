@@ -51,6 +51,15 @@ dependencies {
     implementation "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
+    //AutoValue dependencies
+    compileOnly "com.google.auto.value:auto-value-annotations:$rootProject.ext.autoValueVersion"
+    annotationProcessor "com.google.auto.value:auto-value-annotations:$rootProject.ext.autoValueVersion"
+    annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
+
+    //AutoValue-Moshi dependencies
+    compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
+
     //Test dependencies
     testImplementation "junit:junit:$rootProject.ext.jUnitVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.ext.testRunnerVersion"

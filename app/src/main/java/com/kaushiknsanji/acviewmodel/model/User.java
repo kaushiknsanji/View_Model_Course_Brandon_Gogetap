@@ -1,22 +1,26 @@
 package com.kaushiknsanji.acviewmodel.model;
 
+import com.google.auto.value.AutoValue;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
 /**
  * Remote Model for storing the User/Owner information of a GitHub {@link Repo}.
  *
  * @author Kaushik N Sanji
  */
-public class User {
-
-    //JSON field for the Login/User Name of the Repository
-    private final String login;
+@AutoValue
+public abstract class User {
 
     /**
-     * Constructor of {@link User}
+     * Method that returns the {@link JsonAdapter} for use with {@link Moshi}
+     * de/serialization of JSON.
      *
-     * @param login Login/User Name of the Repository
+     * @param moshi Instance of {@link Moshi}
+     * @return Instance of {@link JsonAdapter}
      */
-    public User(String login) {
-        this.login = login;
+    public static JsonAdapter<User> jsonAdapter(Moshi moshi) {
+        return new AutoValue_User.MoshiJsonAdapter(moshi);
     }
 
     /**
@@ -24,7 +28,6 @@ public class User {
      *
      * @return Login/User Name of the Repository
      */
-    public String getLogin() {
-        return login;
-    }
+    public abstract String getLogin();
+
 }

@@ -1,51 +1,29 @@
 package com.kaushiknsanji.acviewmodel.model;
 
+import android.support.annotation.Nullable;
+
+import com.google.auto.value.AutoValue;
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 /**
  * Remote Model for storing the details of a GitHub Repository.
  *
  * @author Kaushik N Sanji
  */
-public class Repo {
-
-    //JSON field for Repository ID
-    private final long id;
-
-    //JSON field for Repository Name
-    private final String name;
-
-    //JSON field for Repository Description
-    private final String description;
-
-    //JSON object for User information
-    private final User owner;
-
-    //JSON field for Repository Stars count
-    @Json(name = "stargazers_count")
-    private final long stars;
-
-    //JSON field for Repository Forks count
-    @Json(name = "forks_count")
-    private final long forks;
+@AutoValue
+public abstract class Repo {
 
     /**
-     * Constructor of {@link Repo}
+     * Method that returns the {@link JsonAdapter} for use with {@link Moshi}
+     * de/serialization of JSON.
      *
-     * @param id          A {@link Long} value of Repository ID
-     * @param name        Repository Name
-     * @param description Repository Description
-     * @param owner       A {@link User} information of the Repository
-     * @param stars       A {@link Long} value of the number of Stars on the Repository
-     * @param forks       A {@link Long} value of the number of Forks on the Repository
+     * @param moshi Instance of {@link Moshi}
+     * @return Instance of {@link JsonAdapter}
      */
-    public Repo(long id, String name, String description, User owner, long stars, long forks) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.owner = owner;
-        this.stars = stars;
-        this.forks = forks;
+    public static JsonAdapter<Repo> jsonAdapter(Moshi moshi) {
+        return new AutoValue_Repo.MoshiJsonAdapter(moshi);
     }
 
     /**
@@ -53,52 +31,43 @@ public class Repo {
      *
      * @return A {@link Long} value of Repository ID
      */
-    public long getId() {
-        return id;
-    }
+    public abstract long getId();
 
     /**
      * Getter Method for the Repository Name
      *
      * @return Name of the Repository
      */
-    public String getName() {
-        return name;
-    }
+    public abstract String getName();
 
     /**
      * Getter Method for the Repository Description
      *
      * @return Description of the Repository
      */
-    public String getDescription() {
-        return description;
-    }
+    @Nullable
+    public abstract String getDescription();
 
     /**
      * Getter Method for the {@link User} information of the Repository
      *
      * @return A {@link User} information of the Repository
      */
-    public User getOwner() {
-        return owner;
-    }
+    public abstract User getOwner();
 
     /**
      * Getter Method for the number of Stars on the Repository
      *
      * @return A {@link Long} value of the number of Stars on the Repository
      */
-    public long getStars() {
-        return stars;
-    }
+    @Json(name = "stargazers_count")
+    public abstract long getStars();
 
     /**
      * Getter Method for the number of Forks on the Repository
      *
      * @return A {@link Long} value of the number of Forks on the Repository
      */
-    public long getForks() {
-        return forks;
-    }
+    @Json(name = "forks_count")
+    public abstract long getForks();
 }

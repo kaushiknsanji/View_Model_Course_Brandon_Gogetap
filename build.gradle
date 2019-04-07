@@ -46,6 +46,12 @@ ext {
     //Dagger dependencies
     daggerVersion = '2.21'
 
+    //AutoValue dependencies
+    autoValueVersion = '1.6.4'
+
+    //AutoValue-Moshi dependencies
+    autoValueMoshiVersion = '0.4.5'
+
     //Test dependencies
     jUnitVersion = '4.12'
     testRunnerVersion = '1.0.2'
